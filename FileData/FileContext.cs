@@ -6,7 +6,6 @@ namespace FileData;
 public class FileContext
 {
     private const string filePath = "data.json";
-
     private DataContainer? dataContainer;
 
     public ICollection<Todo> Todos
