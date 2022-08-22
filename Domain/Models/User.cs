@@ -1,4 +1,4 @@
-﻿namespace Entities;
+﻿namespace Entities.Models;
 
 public class User
 {
