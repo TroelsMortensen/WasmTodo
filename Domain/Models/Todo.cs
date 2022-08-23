@@ -1,4 +1,4 @@
-﻿namespace Entities.Models;
+﻿namespace Domain.Models;
 
 public class Todo
 {

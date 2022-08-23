@@ -1,4 +1,4 @@
-﻿using Entities.Models;
+﻿using Domain.Models;
 
 namespace FileData;
 

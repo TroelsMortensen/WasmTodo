@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using Entities.Models;
+using Domain.Models;
 
 namespace FileData;
 
