@@ -14,10 +14,14 @@ public class UserFileDAO : IUserDao
 
     public Task<User> Create(User user)
     {
-        int nextId = context.Users.Max(u => u.Id);
-        nextId++;
+        int userId = 1;
+        if (context.Users.Any())
+        {
+            userId = context.Users.Max(u => u.Id);
+            userId++;
+        }
 
-        user.Id = nextId;
+        user.Id = userId;
 
         context.Users.Add(user);
         context.SaveChanges();
