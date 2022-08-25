@@ -31,6 +31,11 @@ public class UserLogic : IUserLogic
         return created;
     }
 
+    public Task<ICollection<User>> Get(SearchUserParametersDto searchParameters)
+    {
+        return userDao.Get(searchParameters);
+    }
+
     private static void ValidateData(UserCreationDto userToCreate)
     {
         string userName = userToCreate.UserName;
