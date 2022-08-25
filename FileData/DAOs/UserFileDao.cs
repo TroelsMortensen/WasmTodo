@@ -38,7 +38,7 @@ public class UserFileDAO : IUserDao
         return Task.FromResult(existing);
     }
 
-    public Task<ICollection<User>> Get(SearchUserParametersDto searchParameters)
+    public Task<IEnumerable<User>> Get(SearchUserParametersDto searchParameters)
     {
         IEnumerable<User> users = context.Users.AsEnumerable();
         if (searchParameters.UsernameContains != null)
@@ -46,7 +46,6 @@ public class UserFileDAO : IUserDao
             users = context.Users.Where(u => u.UserName.Contains(searchParameters.UsernameContains, StringComparison.OrdinalIgnoreCase));
         }
 
-        ICollection<User> result = new List<User>(users);
-        return Task.FromResult(result);
+        return Task.FromResult(users);
     }
 }
