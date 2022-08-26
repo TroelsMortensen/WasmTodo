@@ -25,7 +25,7 @@ public class TodoLogic : ITodoLogic
         }
 
         ValidateTodo(dto);
-        Todo todo = new Todo(dto.OwnerId, dto.Title);
+        Todo todo = new (dto.OwnerId, dto.Title);
         Todo created = await todoDao.Create(todo);
         return created;
     }
