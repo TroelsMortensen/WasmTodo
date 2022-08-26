@@ -48,4 +48,12 @@ public class UserFileDAO : IUserDao
 
         return Task.FromResult(users);
     }
+
+    public Task<User?> GetById(int id)
+    {
+        User? existing = context.Users.FirstOrDefault(u =>
+            u.Id == id
+        );
+        return Task.FromResult(existing);
+    }
 }

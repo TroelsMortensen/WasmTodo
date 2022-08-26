@@ -7,6 +7,7 @@ public interface IUserDao
 {
     Task<User> Create(User user);
     Task<User?> GetByUsername(string userName);
-    public Task<IEnumerable<User>> Get(SearchUserParametersDto searchParameters);
+    Task<IEnumerable<User>> Get(SearchUserParametersDto searchParameters);
 
+    Task<User?> GetById(int id);
 }
