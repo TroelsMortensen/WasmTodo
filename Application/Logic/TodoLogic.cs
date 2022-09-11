@@ -16,9 +16,9 @@ public class TodoLogic : ITodoLogic
         this.userDao = userDao;
     }
 
-    public async Task<Todo> Create(TodoCreationDto dto)
+    public async Task<Todo> CreateAsync(TodoCreationDto dto)
     {
-        User? user = await userDao.GetById(dto.OwnerId);
+        User? user = await userDao.GetByIdAsync(dto.OwnerId);
         if (user == null)
         {
             throw new Exception($"User with id {dto.OwnerId} was not found.");

@@ -30,25 +30,20 @@ public class TodoFileDao : ITodoDao
         return Task.FromResult(todo);
     }
 
-    public Task<IEnumerable<Todo>> Get(SearchTodoParametersDto searchParams)
+    public Task<IEnumerable<Todo>> GetAsync(SearchTodoParametersDto searchParams)
     {
         IEnumerable<Todo> result = context.Todos.AsEnumerable();
 
         if (!string.IsNullOrEmpty(searchParams.Username))
         {
-            User? user = context.Users.FirstOrDefault(u =>
-                u.UserName.Equals(searchParams.Username, StringComparison.OrdinalIgnoreCase));
-            
-            if (user != null)
-            {
-                int ownerId = user.Id;
-                result = result.Where(t => t.OwnerId == ownerId);
-            }
+            // we know username is unique, so just fetch the first
+            result = context.Todos.Where(todo =>
+                todo.Owner.UserName.Equals(searchParams.Username, StringComparison.OrdinalIgnoreCase));
         }
 
         if (searchParams.UserId != null)
         {
-            result = result.Where(t => t.OwnerId == searchParams.UserId);
+            result = result.Where(t => t.Owner.Id == searchParams.UserId);
         }
 
         if (searchParams.CompletedStatus != null)
