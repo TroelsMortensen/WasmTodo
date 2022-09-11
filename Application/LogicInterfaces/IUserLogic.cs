@@ -5,5 +5,5 @@ namespace Domain.LogicInterfaces;
 
 public interface IUserLogic
 {
-    public Task<User> Create(UserCreationDto dto);
+    public Task<User> CreateAsync(UserCreationDto dto);
 }

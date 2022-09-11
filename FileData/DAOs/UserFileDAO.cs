@@ -12,7 +12,7 @@ public class UserFileDAO : IUserDao
         this.context = context;
     }
 
-    public Task<User> Create(User user)
+    public Task<User> CreateAsync(User user)
     {
         int userId = 1;
         if (context.Users.Any())
@@ -29,7 +29,7 @@ public class UserFileDAO : IUserDao
         return Task.FromResult(user);
     }
 
-    public Task<User?> GetByUsername(string userName)
+    public Task<User?> GetByUsernameAsync(string userName)
     {
         User? existing = context.Users.FirstOrDefault(u =>
             u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
