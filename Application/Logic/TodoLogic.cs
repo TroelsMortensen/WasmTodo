@@ -25,14 +25,14 @@ public class TodoLogic : ITodoLogic
         }
 
         ValidateTodo(dto);
-        Todo todo = new (dto.OwnerId, dto.Title);
-        Todo created = await todoDao.Create(todo);
+        Todo todo = new Todo(user, dto.Title);
+        Todo created = await todoDao.CreateAsync(todo);
         return created;
     }
 
-    public Task<IEnumerable<Todo>> Get(SearchTodoParametersDto searchParameters)
+    public Task<IEnumerable<Todo>> GetAsync(SearchTodoParametersDto searchParameters)
     {
-        return todoDao.Get(searchParameters);
+        return todoDao.GetAsync(searchParameters);
     }
 
     private void ValidateTodo(TodoCreationDto dto)

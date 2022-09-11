@@ -18,11 +18,11 @@ public class TodosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Todo>> Create(TodoCreationDto dto)
+    public async Task<ActionResult<Todo>> CreateAsync(TodoCreationDto dto)
     {
         try
         {
-            Todo created = await todoLogic.Create(dto);
+            Todo created = await todoLogic.CreateAsync(dto);
             return Created($"/todos/{created.Id}", created);
         }
         catch (Exception e)

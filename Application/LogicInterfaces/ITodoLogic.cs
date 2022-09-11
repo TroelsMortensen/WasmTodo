@@ -5,7 +5,6 @@ namespace Domain.LogicInterfaces;
 
 public interface ITodoLogic
 {
-    Task<Todo> Create(TodoCreationDto dto);
-
-    Task<IEnumerable<Todo>> Get(SearchTodoParametersDto searchParameters);
+    Task<Todo> CreateAsync(TodoCreationDto dto);
+    Task<IEnumerable<Todo>> GetAsync(SearchTodoParametersDto searchParameters);
 }
