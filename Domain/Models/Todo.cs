@@ -3,13 +3,13 @@
 public class Todo
 {
     public int Id { get; set; }
-    public int OwnerId { get; set; }
-    public string Title { get; set; }
-    public bool IsCompleted { get; set; }
+    public User Owner { get; }
+    public string Title { get; }
+    public bool IsCompleted { get; }
 
-    public Todo(int ownerId, string title)
+    public Todo(User owner, string title)
     {
-        OwnerId = ownerId;
+        Owner = owner;
         Title = title;
     }
 }
