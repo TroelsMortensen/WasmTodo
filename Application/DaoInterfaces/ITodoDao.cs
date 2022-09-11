@@ -4,6 +4,6 @@ namespace Domain.DaoInterfaces;
 
 public interface ITodoDao
 {
-    Task<Todo> Create(Todo todo);
+    Task<Todo> CreateAsync(Todo todo);
 
 }

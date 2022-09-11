@@ -5,5 +5,5 @@ namespace Domain.LogicInterfaces;
 
 public interface ITodoLogic
 {
-    Task<Todo> Create(TodoCreationDto dto);
+    Task<Todo> CreateAsync(TodoCreationDto dto);
 }

@@ -16,17 +16,17 @@ public class TodoLogic : ITodoLogic
         this.userDao = userDao;
     }
 
-    public async Task<Todo> Create(TodoCreationDto dto)
+    public async Task<Todo> CreateAsync(TodoCreationDto dto)
     {
-        User? user = await userDao.GetById(dto.OwnerId);
+        User? user = await userDao.GetByIdAsync(dto.OwnerId);
         if (user == null)
         {
             throw new Exception($"User with id {dto.OwnerId} was not found.");
         }
 
         ValidateTodo(dto);
-        Todo todo = new Todo(dto.OwnerId, dto.Title);
-        Todo created = await todoDao.Create(todo);
+        Todo todo = new Todo(user, dto.Title);
+        Todo created = await todoDao.CreateAsync(todo);
         return created;
     }
 
