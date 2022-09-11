@@ -17,11 +17,11 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> Create(UserCreationDto dto)
+    public async Task<ActionResult<User>> CreateAsync(UserCreationDto dto)
     {
         try
         {
-            User user = await userLogic.Create(dto);
+            User user = await userLogic.CreateAsync(dto);
             return Created($"/users/{user.Id}", user);
         }
         catch (Exception e)
