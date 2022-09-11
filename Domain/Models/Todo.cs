@@ -6,7 +6,6 @@ public class Todo
     public User Owner { get; }
     public string Title { get; }
     public bool IsCompleted { get; }
-    
 
     public Todo(User owner, string title)
     {
