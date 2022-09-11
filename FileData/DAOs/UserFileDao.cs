@@ -38,7 +38,7 @@ public class UserFileDAO : IUserDao
         return Task.FromResult(existing);
     }
 
-    public Task<IEnumerable<User>> Get(SearchUserParametersDto searchParameters)
+    public Task<IEnumerable<User>> GetAsync(SearchUserParametersDto searchParameters)
     {
         IEnumerable<User> users = context.Users.AsEnumerable();
         if (searchParameters.UsernameContains != null)

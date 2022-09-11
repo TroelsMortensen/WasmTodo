@@ -31,9 +31,9 @@ public class UserLogic : IUserLogic
         return created;
     }
 
-    public Task<IEnumerable<User>> Get(SearchUserParametersDto searchParameters)
+    public Task<IEnumerable<User>> GetAsync(SearchUserParametersDto searchParameters)
     {
-        return userDao.Get(searchParameters);
+        return userDao.GetAsync(searchParameters);
     }
 
     private static void ValidateData(UserCreationDto userToCreate)
