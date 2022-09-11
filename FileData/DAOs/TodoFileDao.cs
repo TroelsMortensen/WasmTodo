@@ -64,4 +64,19 @@ public class TodoFileDao : ITodoDao
 
         return Task.FromResult(result);
     }
+
+    public Task<Todo?> GetById(int todoId)
+    {
+        Todo? existing = context.Todos.FirstOrDefault(t => t.Id == todoId);
+        return Task.FromResult(existing);
+    }
+
+    public async Task Update(Todo todo)
+    {
+        Todo existing = (await GetById(todo.Id))!;
+        existing.Title = todo.Title;
+        existing.IsCompleted = todo.IsCompleted;
+        existing.OwnerId = todo.OwnerId;
+        context.SaveChanges();
+    }
 }

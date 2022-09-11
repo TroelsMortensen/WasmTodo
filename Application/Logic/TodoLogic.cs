@@ -24,20 +24,41 @@ public class TodoLogic : ITodoLogic
             throw new Exception($"User with id {dto.OwnerId} was not found.");
         }
 
-        ValidateTodo(dto);
-        Todo todo = new (dto.OwnerId, dto.Title);
+        Todo todo = new(dto.OwnerId, dto.Title);
+        ValidateTodo(todo);
         Todo created = await todoDao.Create(todo);
         return created;
     }
+    
 
     public Task<IEnumerable<Todo>> Get(SearchTodoParametersDto searchParameters)
     {
         return todoDao.Get(searchParameters);
     }
 
-    private void ValidateTodo(TodoCreationDto dto)
+    public async Task Update(Todo todo)
     {
-        if (string.IsNullOrEmpty(dto.Title)) throw new Exception("Title cannot be empty.");
+        Todo? existing = await todoDao.GetById(todo.Id);
+
+        if (existing == null)
+        {
+            throw new Exception($"Todo with ID {todo.Id} not found!");
+        }
+
+        User? user = await userDao.GetById(todo.OwnerId);
+        if (user == null)
+        {
+            throw new Exception($"User with id {todo.OwnerId} was not found.");
+        }
+
+        ValidateTodo(todo);
+
+        await todoDao.Update(todo);
+    }
+
+    private void ValidateTodo(Todo todo)
+    {
+        if (string.IsNullOrEmpty(todo.Title)) throw new Exception("Title cannot be empty.");
         // other validation stuff
     }
 }
