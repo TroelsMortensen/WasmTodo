@@ -5,9 +5,8 @@ namespace Domain.DaoInterfaces;
 
 public interface ITodoDao
 {
-    Task<Todo> Create(Todo todo);
-    Task<IEnumerable<Todo>> Get(SearchTodoParametersDto searchParams);
-    Task Update(Todo todo);
-
-    Task<Todo?> GetById(int todoId);
+    Task<Todo> CreateAsync(Todo todo);
+    Task<IEnumerable<Todo>> GetAsync(SearchTodoParametersDto searchParams);
+    Task UpdateAsync(Todo todo);
+    Task<Todo?> GetByIdAsync(int todoId);
 }

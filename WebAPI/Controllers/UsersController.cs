@@ -17,11 +17,11 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> Create(UserCreationDto dto)
+    public async Task<ActionResult<User>> CreateAsync(UserCreationDto dto)
     {
         try
         {
-            User user = await userLogic.Create(dto);
+            User user = await userLogic.CreateAsync(dto);
             return Created($"/users/{user.Id}", user);
         }
         catch (Exception e)
@@ -32,12 +32,12 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> Get([FromQuery] string username)
+    public async Task<ActionResult<IEnumerable<User>>> GetAsync([FromQuery] string? username)
     {
         try
         {
-            SearchUserParametersDto p = new(username);
-            IEnumerable<User> users = await userLogic.Get(p);
+            SearchUserParametersDto parameters = new(username);
+            IEnumerable<User> users = await userLogic.GetAsync(parameters);
             return Ok(users);
         }
         catch (Exception e)
