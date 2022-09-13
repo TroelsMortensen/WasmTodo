@@ -3,15 +3,12 @@
 public class TodoUpdateDto
 {
     public int Id { get; }
-    public int OwnerId { get; }
-    public string Title { get; }
-    public bool IsCompleted { get; }
+    public int? OwnerId { get; set; }
+    public string? Title { get; set; }
+    public bool? IsCompleted { get; set; }
 
-    public TodoUpdateDto(int id, int ownerId, string title, bool isCompleted)
+    public TodoUpdateDto(int id)
     {
         Id = id;
-        OwnerId = ownerId;
-        Title = title;
-        IsCompleted = isCompleted;
     }
 }
