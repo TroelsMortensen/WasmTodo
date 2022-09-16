@@ -11,4 +11,5 @@ public interface ITodoLogic
     
     Task DeleteAsync(int id);
 
+    Task<TodoBasicDto> GetByIdAsync(int id);
 }
