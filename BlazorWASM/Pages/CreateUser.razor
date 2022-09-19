@@ -5,7 +5,7 @@
 
 <div class="card">
     <h3>Create User</h3>
-    <div class="input-area">
+    <div class="form-group field">
         <label>User name:</label>
         <input type="text" @bind="username" @bind:event="oninput"/>
         @if (!string.IsNullOrEmpty(resultMsg))
@@ -14,7 +14,7 @@
         }
     </div>
     <div class="button-row">
-        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(username))">Create</button>
+        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(username))" class="acceptbtn">Create</button>
     </div>
 </div>
 
