@@ -1,0 +1,82 @@
+﻿@page "/ViewTodos"
+
+<h3>Todos</h3>
+
+<div class="filterbar">
+    <div class="filterscontainer">
+        <img src="img/@(doShowFilters ? "clear_" : "")funnel.png" class="funnel" @onclick="OpenCloseFilters"/>
+        @if (doShowFilters)
+        {
+            <div class="filter">
+                <div>
+                    <label>Owner ID:</label>
+                </div>
+                <div>
+                    <input type="number" class="owneridfield" @oninput="args => UpdateOwnerFilter(args)" min="0"/>
+                </div>
+            </div>
+            <div class="filter">
+                <div>
+                    <label style="text-align: center">Is completed?</label>
+                </div>
+                <div>
+                    <select class="completedstatusfield" @onchange="args => UpdateCompletedStatusFilter(args)">
+                        <option value="all">all</option>
+                        <option value="true">true</option>
+                        <option value="false">false</option>
+                    </select>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    private bool doShowFilters;
+    
+    private void OpenCloseFilters()
+    {
+        doShowFilters = !doShowFilters;
+        if (!doShowFilters)
+        {
+            ownerIdFilter = null;
+            isCompletedFilter = null;
+            todosToShow = allTodos;
+        }
+    }
+
+    private void UpdateOwnerFilter(ChangeEventArgs args)
+    {
+        string value = (string)args.Value;
+        if (string.IsNullOrEmpty(value))
+        {
+            ownerIdFilter = null;
+            ApplyFilters();
+            return;
+        }
+        int idFilter = int.Parse(value);
+        if (idFilter < 0)
+        {
+            return;
+        }
+
+        ownerIdFilter = idFilter;
+        ApplyFilters();
+    }
+
+    private void UpdateCompletedStatusFilter(ChangeEventArgs args)
+    {
+        string value = (string)args.Value;
+
+        try
+        {
+            isCompletedFilter = bool.Parse(value);
+        }
+        catch (Exception e)
+        {
+            isCompletedFilter = null;
+        }
+        ApplyFilters();
+    }
+}
