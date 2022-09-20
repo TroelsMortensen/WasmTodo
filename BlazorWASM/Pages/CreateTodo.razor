@@ -4,6 +4,7 @@
 @using Domain.DTOs
 @inject IUserService userService
 @inject ITodoService todoService
+@inject NavigationManager navMgr
 
 <div class="card">
     @if (users == null)
@@ -81,9 +82,7 @@
         {
             TodoCreationDto dto = new((int)selectedUserId, todoTitle);
             await todoService.CreateAsync(dto);
-            selectedUserId = null;
-            todoTitle = "";
-            msg = "Todo created";
+            navMgr.NavigateTo("/");
         }
         catch (Exception e)
         {
