@@ -45,7 +45,6 @@ public class UserHttpClient : IUserService
             throw new Exception(result);
         }
 
-        Console.WriteLine(result);
         IEnumerable<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true

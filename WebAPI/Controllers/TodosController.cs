@@ -1,5 +1,5 @@
-﻿using Domain.DTOs;
-using Domain.LogicInterfaces;
+﻿using Application.LogicInterfaces;
+using Domain.DTOs;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +18,7 @@ public class TodosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Todo>> CreateAsync(TodoCreationDto dto)
+    public async Task<ActionResult<Todo>> CreateAsync([FromBody]TodoCreationDto dto)
     {
         try
         {

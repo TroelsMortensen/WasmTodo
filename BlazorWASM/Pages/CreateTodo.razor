@@ -1,6 +1,94 @@
 ﻿@page "/CreateTodo"
-<h3>CreateTodo</h3>
+@using HttpClients.ClientInterfaces
+@using Domain.Models
+@using Domain.DTOs
+@inject IUserService userService
+@inject ITodoService todoService
+
+<div class="card">
+    @if (users == null)
+    {
+        <label>Loading users...</label>
+    }
+    else if (!users.Any())
+    {
+        <label>No users, you cannot create a Todo</label>
+    }
+    else
+    {
+        <h3>Create Todo</h3>
+        <div class="form-group field">
+            <label>Title:</label>
+            <input type="text" @bind="todoTitle"/>
+        </div>
+        <div class="form-group field">
+            <label>Assignee:</label>
+            <select @bind="selectedUserId">
+                <option>Choose</option>
+                @foreach (User user in users)
+                {
+                    <option value="@user.Id">@user.UserName</option>
+                }
+            </select>
+        </div>
+        <div class="button-row">
+            @if (!string.IsNullOrEmpty(msg))
+            {
+                <label style="color: red">@msg</label>
+            }
+            <button @onclick="Create" class="acceptbtn">Create</button>
+        </div>
+    }
+</div>
+
 
 @code {
-    
+    private IEnumerable<User>? users;
+    private int? selectedUserId;
+    private string todoTitle = "";
+
+    private string msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            users = await userService.GetUsers();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+    private async Task Create()
+    {
+        msg = "";
+        if (selectedUserId == null)
+        {
+            msg = "You must select an assignee!";
+            return;
+        }
+        if (string.IsNullOrEmpty(todoTitle))
+        {
+            msg = "Title cannot be empty!";
+            return;
+        }
+
+        try
+        {
+            TodoCreationDto dto = new((int)selectedUserId, todoTitle);
+            await todoService.CreateAsync(dto);
+            selectedUserId = null;
+            todoTitle = "";
+            msg = "Todo created";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
 }

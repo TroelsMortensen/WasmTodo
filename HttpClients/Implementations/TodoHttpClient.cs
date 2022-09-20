@@ -14,10 +14,9 @@ public class TodoHttpClient : ITodoService
         this.client = client;
     }
 
-    public async Task Create(TodoCreationDto dto)
+    public async Task CreateAsync(TodoCreationDto dto)
     {
-        string dtoAsJson = JsonSerializer.Serialize(dto);
-        HttpResponseMessage response = await client.PostAsJsonAsync("/todos",dtoAsJson);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/todos",dto);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
