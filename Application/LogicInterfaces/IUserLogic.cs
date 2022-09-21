@@ -1,7 +1,7 @@
 ﻿using Domain.DTOs;
 using Domain.Models;
 
-namespace Domain.LogicInterfaces;
+namespace Application.LogicInterfaces;
 
 public interface IUserLogic
 {
