@@ -1,14 +1,14 @@
-﻿using Domain.DaoInterfaces;
+﻿using Application.DaoInterfaces;
 using Domain.DTOs;
 using Domain.Models;
 
 namespace FileData.DAOs;
 
-public class UserFileDAO : IUserDao
+public class UserFileDao : IUserDao
 {
     private readonly FileContext context;
 
-    public UserFileDAO(FileContext context)
+    public UserFileDao(FileContext context)
     {
         this.context = context;
     }

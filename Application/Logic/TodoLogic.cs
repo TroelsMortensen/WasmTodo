@@ -1,6 +1,6 @@
-﻿using Domain.DaoInterfaces;
+﻿using Application.DaoInterfaces;
+using Application.LogicInterfaces;
 using Domain.DTOs;
-using Domain.LogicInterfaces;
 using Domain.Models;
 
 namespace Domain.Logic;
