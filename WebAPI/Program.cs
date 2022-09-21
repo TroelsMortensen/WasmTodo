@@ -1,6 +1,6 @@
-using Domain.DaoInterfaces;
+using Application.DaoInterfaces;
+using Application.LogicInterfaces;
 using Domain.Logic;
-using Domain.LogicInterfaces;
 using FileData;
 using FileData.DAOs;
 

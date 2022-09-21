@@ -1,6 +1,6 @@
 ﻿using Domain.Models;
 
-namespace Domain.DaoInterfaces;
+namespace Application.DaoInterfaces;
 
 public interface IUserDao
 {

@@ -1,4 +1,4 @@
-﻿using Domain.DaoInterfaces;
+﻿using Application.DaoInterfaces;
 using Domain.Models;
 
 namespace FileData.DAOs;
