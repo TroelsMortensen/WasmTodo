@@ -36,7 +36,10 @@ public class TodoHttpClient : ITodoService
             throw new Exception(content);
         }
 
-        ICollection<Todo> todos = JsonSerializer.Deserialize<ICollection<Todo>>(content)!;
+        ICollection<Todo> todos = JsonSerializer.Deserialize<ICollection<Todo>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
         return todos;
     }
 
