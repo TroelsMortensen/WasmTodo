@@ -27,9 +27,9 @@ public class TodoHttpClient : ITodoService
 
     public async Task<ICollection<Todo>> GetAsync(string? userName, int? userId, bool? completedStatus, string? titleContains)
     {
-        // string query = ConstructQuery(userName, userId, completedStatus, titleContains);
+        string query = ConstructQuery(userName, userId, completedStatus, titleContains);
 
-        HttpResponseMessage response = await client.GetAsync("/todos");
+        HttpResponseMessage response = await client.GetAsync("/todos"+query);
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {

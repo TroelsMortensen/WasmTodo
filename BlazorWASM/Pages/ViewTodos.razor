@@ -4,6 +4,34 @@
 @inject ITodoService todoService
 
 <h3>Todos</h3>
+<div class="filter-bar">
+    <div class="filters-container">
+        <img src="icons/@(doShowFilters ? "clear_" : "")funnel.png" class="funnel" @onclick="@(() => doShowFilters = !doShowFilters)" alt="Funnel"/>
+        @if (doShowFilters)
+        {
+            <div class="filter">
+                <label>Username:</label>
+                <input type="text" @bind="usernameFilter"/>
+            </div>
+            <div class="filter">
+                <label>User id:</label>
+                <input type="number" @bind="userIdFilter"/>
+            </div>
+            <div class="filter">
+                <label>Is completed?</label>
+                <select @bind="completedStatusFilter">
+                    <option value="all">All</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label>Title contains:</label>
+                <input type="text" @bind="titleContainsFilter"/>
+            </div>
+        }
+    </div>
+</div>
 
 <div>
     <button @onclick="LoadTodos">Load</button>
@@ -48,12 +76,23 @@ else
 @code {
     private IEnumerable<Todo>? todos;
     private string msg = "";
+    private bool doShowFilters = false;
 
+    private string? usernameFilter;
+    private int? userIdFilter;
+    private string? completedStatusFilter;
+    private string? titleContainsFilter;
+    
     private async Task LoadTodos()
     {
         try
         {
-            todos = await todoService.GetAsync(null, null, null, null);
+            bool? completedFilterValue = null;
+            if (!string.IsNullOrEmpty(completedStatusFilter) && !completedStatusFilter.Equals("all"))
+            {
+                completedFilterValue = bool.Parse(completedStatusFilter);
+            }
+            todos = await todoService.GetAsync(usernameFilter, userIdFilter, completedFilterValue, titleContainsFilter);
         }
         catch (Exception e)
         {
