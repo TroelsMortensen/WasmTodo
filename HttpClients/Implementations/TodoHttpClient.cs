@@ -46,7 +46,7 @@ public class TodoHttpClient : ITodoService
     private static string ConstructQuery(string? userName, int? userId, bool? completedStatus, string? titleContains)
     {
         string query = "";
-        if (userName != null)
+        if (!string.IsNullOrEmpty(userName))
         {
             query += $"?username={userName}";
         }
@@ -63,7 +63,7 @@ public class TodoHttpClient : ITodoService
             query += $"completedstatus={completedStatus}";
         }
 
-        if (titleContains != null)
+        if (!string.IsNullOrEmpty(titleContains))
         {
             query += string.IsNullOrEmpty(query) ? "?" : "&";
             query += $"titlecontains={titleContains}";
