@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using Domain.DTOs;
 using Domain.Models;
@@ -17,7 +18,7 @@ public class TodoHttpClient : ITodoService
 
     public async Task CreateAsync(TodoCreationDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/todos",dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/todos", dto);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -29,7 +30,7 @@ public class TodoHttpClient : ITodoService
     {
         string query = ConstructQuery(userName, userId, completedStatus, titleContains);
 
-        HttpResponseMessage response = await client.GetAsync("/todos"+query);
+        HttpResponseMessage response = await client.GetAsync("/todos" + query);
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -41,6 +42,19 @@ public class TodoHttpClient : ITodoService
             PropertyNameCaseInsensitive = true
         })!;
         return todos;
+    }
+
+    public async Task UpdateAsync(TodoUpdateDto dto)
+    {
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+
+        HttpResponseMessage response = await client.PatchAsync("/todos", body);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
     }
 
     private static string ConstructQuery(string? userName, int? userId, bool? completedStatus, string? titleContains)

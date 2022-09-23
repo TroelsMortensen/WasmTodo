@@ -1,0 +1,30 @@
+.checkbox-container {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.checkbox-input {
+    position: absolute;
+    transform: scale(0);
+}
+
+.checkbox-input:checked ~ .checkbox-span {
+    transform: rotate(45deg);
+    width: 15px;
+    margin-left: 8px;
+    border-color: #24c78e;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-radius: 0;
+}
+
+.checkbox-span {
+    display: block;
+    width: inherit;
+    height: inherit;
+    border: 3px solid #434343;
+    border-radius: 6px;
+    transition: all 0.375s;
+}
