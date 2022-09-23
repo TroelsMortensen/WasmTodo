@@ -57,6 +57,7 @@ else
             <th>Title</th>
             <th>Completed?</th>
             <th>Edit</th>
+            <th>Delete?</th>
         </tr>
         </thead>
         <tbody>
@@ -71,6 +72,9 @@ else
                 </td>
                 <td>
                     <img src="icons/edit.gif" class="funnel" @onclick="@(() => navMgr.NavigateTo($"/EditTodo/{item.Id}"))"/>
+                </td>
+                <td>
+                HERE
                 </td>
             </tr>
         }
