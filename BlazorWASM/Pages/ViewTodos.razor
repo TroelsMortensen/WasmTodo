@@ -4,6 +4,7 @@
 @using UIComponents
 @using Domain.DTOs
 @inject ITodoService todoService
+@inject NavigationManager navMgr
 
 <h3>Todos</h3>
 <div class="filter-bar">
@@ -55,6 +56,7 @@ else
             <th>Owner ID</th>
             <th>Title</th>
             <th>Completed?</th>
+            <th>Edit</th>
         </tr>
         </thead>
         <tbody>
@@ -66,6 +68,9 @@ else
                 <td>@item.Title</td>
                 <td>
                     <FancyCheckBox IsCompleted="@item.IsCompleted" OnChange="@((status) => CompleteTodo(item, status))"/>
+                </td>
+                <td>
+                    <img src="icons/edit.gif" class="funnel" @onclick="@(() => navMgr.NavigateTo($"/EditTodo/{item.Id}"))"/>
                 </td>
             </tr>
         }
