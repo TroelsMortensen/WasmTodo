@@ -11,4 +11,6 @@ public interface ITodoService
     Task UpdateAsync(TodoUpdateDto dto);
 
     Task<TodoBasicDto> GetByIdAsync(int id);
+
+    Task DeleteAsync(int id);
 }

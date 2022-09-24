@@ -74,7 +74,9 @@ else
                     <img src="icons/edit.gif" class="funnel" @onclick="@(() => navMgr.NavigateTo($"/EditTodo/{item.Id}"))"/>
                 </td>
                 <td>
-                HERE
+                    <label @onclick="@(() => RemoveTodo(item.Id))" style="cursor:pointer; color: red; font-weight: bold">
+                        &#x2717;
+                    </label>
                 </td>
             </tr>
         }
@@ -95,7 +97,7 @@ else
     private int? userIdFilter;
     private string? completedStatusFilter;
     private string? titleContainsFilter;
-    
+
     private async Task LoadTodos()
     {
         try
@@ -123,6 +125,24 @@ else
         try
         {
             await todoService.UpdateAsync(dto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+    private async Task RemoveTodo(int todoId)
+    {
+        msg = "";
+        try
+        {
+            await todoService.DeleteAsync(todoId);
+            
+            var list = new List<Todo>(todos!);
+            list.RemoveAll(todo => todo.Id == todoId);
+            todos = list.AsEnumerable();
         }
         catch (Exception e)
         {
