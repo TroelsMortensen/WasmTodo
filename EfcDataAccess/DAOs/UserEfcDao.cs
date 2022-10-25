@@ -24,7 +24,7 @@ public class UserEfcDao : IUserDao
 
     public async Task<User?> GetByUsernameAsync(string userName)
     {
-        User? existing = context.Users.FirstOrDefault(u =>
+        User? existing = await context.Users.FirstOrDefaultAsync(u =>
             u.UserName.ToLower().Equals(userName.ToLower())
         );
         return existing;
@@ -42,8 +42,9 @@ public class UserEfcDao : IUserDao
         return result;
     }
 
-    public Task<User?> GetByIdAsync(int id)
+    public async Task<User?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        User? user = await context.Users.FindAsync(id);
+        return user;
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Application.DaoInterfaces;
 using Domain.DTOs;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EfcDataAccess.DAOs;
 
@@ -14,14 +16,42 @@ public class TodoEfcDao : ITodoDao
         this.context = context;
     }
 
-    public Task<Todo> CreateAsync(Todo todo)
+    public async Task<Todo> CreateAsync(Todo todo)
     {
-        throw new NotImplementedException();
+        EntityEntry<Todo> added = await context.Todos.AddAsync(todo);
+        await context.SaveChangesAsync();
+        return added.Entity;
     }
 
-    public Task<IEnumerable<Todo>> GetAsync(SearchTodoParametersDto searchParameters)
+    public async Task<IEnumerable<Todo>> GetAsync(SearchTodoParametersDto searchParams)
     {
-        throw new NotImplementedException();
+        IQueryable<Todo> query = context.Todos.Include(todo => todo.Owner).AsQueryable();
+        
+        if (!string.IsNullOrEmpty(searchParams.Username))
+        {
+            // we know username is unique, so just fetch the first
+            query = query.Where(todo =>
+                todo.Owner.UserName.ToLower().Equals(searchParams.Username.ToLower()));
+        }
+        
+        if (searchParams.UserId != null)
+        {
+            query = query.Where(t => t.Owner.Id == searchParams.UserId);
+        }
+        
+        if (searchParams.CompletedStatus != null)
+        {
+            query = query.Where(t => t.IsCompleted == searchParams.CompletedStatus);
+        }
+        
+        if (!string.IsNullOrEmpty(searchParams.TitleContains))
+        {
+            query = query.Where(t =>
+                t.Title.ToLower().Contains(searchParams.TitleContains.ToLower()));
+        }
+
+        List<Todo> result = await query.ToListAsync();
+        return result;
     }
 
     public Task UpdateAsync(Todo todo)
