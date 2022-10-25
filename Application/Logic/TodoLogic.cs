@@ -24,7 +24,11 @@ public class TodoLogic : ITodoLogic
             throw new Exception($"User with id {dto.OwnerId} was not found.");
         }
 
-        Todo todo = new Todo(user, dto.Title);
+        Todo todo = new Todo()
+        {
+            Owner = user,
+            Title = dto.Title
+        };
 
         ValidateTodo(todo);
 
@@ -64,11 +68,13 @@ public class TodoLogic : ITodoLogic
         User userToUse = user ?? existing.Owner;
         string titleToUse = dto.Title ?? existing.Title;
         bool completedToUse = dto.IsCompleted ?? existing.IsCompleted;
-        
-        Todo updated = new (userToUse, titleToUse)
+
+        Todo updated = new()
         {
-            IsCompleted = completedToUse,
             Id = existing.Id,
+            Owner = userToUse,
+            Title = titleToUse,
+            IsCompleted = completedToUse
         };
 
         ValidateTodo(updated);
