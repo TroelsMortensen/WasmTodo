@@ -54,18 +54,28 @@ public class TodoEfcDao : ITodoDao
         return result;
     }
 
-    public Task UpdateAsync(Todo todo)
+    public async Task UpdateAsync(Todo todo)
     {
-        throw new NotImplementedException();
+        context.ChangeTracker.Clear();
+        context.Todos.Update(todo);
+        await context.SaveChangesAsync();
     }
 
-    public Task<Todo?> GetByIdAsync(int todoId)
+    public async Task<Todo?> GetByIdAsync(int todoId)
     {
-        throw new NotImplementedException();
+        Todo? found = await context.Todos.FindAsync(todoId);
+        return found;
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        Todo? existing = await GetByIdAsync(id);
+        if (existing == null)
+        {
+            throw new Exception($"Todo with id {id} not found");
+        }
+
+        context.Todos.Remove(existing);
+        await context.SaveChangesAsync();
     }
 }
