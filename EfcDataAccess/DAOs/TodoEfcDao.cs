@@ -6,6 +6,14 @@ namespace EfcDataAccess.DAOs;
 
 public class TodoEfcDao : ITodoDao
 {
+    
+    private readonly TodoContext context;
+
+    public TodoEfcDao(TodoContext context)
+    {
+        this.context = context;
+    }
+
     public Task<Todo> CreateAsync(Todo todo)
     {
         throw new NotImplementedException();
