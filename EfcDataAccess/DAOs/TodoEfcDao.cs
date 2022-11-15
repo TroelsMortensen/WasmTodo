@@ -56,14 +56,16 @@ public class TodoEfcDao : ITodoDao
 
     public async Task UpdateAsync(Todo todo)
     {
-        context.ChangeTracker.Clear();
         context.Todos.Update(todo);
         await context.SaveChangesAsync();
     }
 
     public async Task<Todo?> GetByIdAsync(int todoId)
     {
-        Todo? found = await context.Todos.FindAsync(todoId);
+        Todo? found = await context.Todos
+            .AsNoTracking()
+            .Include(todo => todo.Owner)
+            .SingleOrDefaultAsync(todo => todo.Id == todoId);
         return found;
     }
 
